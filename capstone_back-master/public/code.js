@@ -76,7 +76,7 @@ var MSG = {
       console.log(sn);
     }
   });
-  /*
+
   window.addEventListener('storage',async () => {
     var sn = window.localStorage.getItem("now");
     console.log(window.localStorage.getItem(sn));
@@ -99,7 +99,6 @@ var MSG = {
       console.log(sn);
     }
   });
-  */
 
     function getURLParams_last(url) {
         var url_arr = url.split("/");

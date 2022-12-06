@@ -183,3 +183,9 @@ html, body {
     text-decoration: none;
   }
   
+.parent {
+    display: flex;
+}
+.child {
+    flex: 1;
+}
