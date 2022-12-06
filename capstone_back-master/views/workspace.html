@@ -1,0 +1,536 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<table width="100%" height="60%">
+    <!--button_area-->
+    <tr>
+      <td colspan=2>
+        <table width="100%">
+          <tr id="tabRow" height="1em">
+            <td width = "10%">live_block_project</td>
+            <td id = user_name>user_host</td>
+            <td class="tabmax">
+              <button id="trashButton" class="notext" title="...">
+                <img src='../media/1x1.gif' class="trash icon21">
+              </button>
+              <button id="linkButton" class="notext" title="..." download>
+                <img src='../media/1x1.gif' class="link icon21" herf = "">
+              </button>
+              <button id="runButton" class="notext primary" title="...">
+                <img src='../media/1x1.gif' class="run icon21">
+              </button>
+              <button id="stopButton" onclick="lock_button()">lock</button>
+              <button id="stopButton" onclick="unlock_button()">un_lock</button>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <!--content_area-->
+    <tr>
+      <td height="99%" width = "50%" id="content_area"></td>
+      <td height="99%" width = "50%" id="content_area1"></td>            
+    </tr>
+</table>
+
+<!--checkbox_table-->
+<table width = "9%" height = "20%">
+    <tr>
+      <td id="user" class="taboff tab_collapse">host</td>
+    </tr>
+    <tr>
+      <td id="other_user1" class="taboff tab_collapse" value="user_student1" onclick = student_tab_handler(this)>student1</td>
+      <td id="check_user1"><input type="checkbox" name="check_right" value=1 onclick='getCheckboxValue(this)'></td>
+    </tr>
+    <tr>
+      <td id="other_user2" class="taboff tab_collapse" value="user_student2" onclick = student_tab_handler(this)>student2</td>
+      <td id="check_user2"><input type="checkbox" name="check_right" value=2 onclick='getCheckboxValue(this)'></td>
+    </tr>
+    <tr>
+      <td id="other_user3" class="taboff tab_collapse" value="user_student3" onclick = student_tab_handler(this)>student3</td>
+      <td id="check_user3"><input type="checkbox" name="check_right" value=3 onclick='getCheckboxValue(this)'></td>
+    </tr>
+</table>
+
+<!--tool_box xml-->
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="%{BKY_CATLOOPS}" colour="%{BKY_LOOPS_HUE}">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+        <value name="BY">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_forEach"></block>
+      <block type="controls_flow_statements"></block>
+    </category>
+    <category name="%{BKY_CATMATH}" colour="%{BKY_MATH_HUE}">
+      <block type="math_number">
+        <field name="NUM">123</field>
+      </block>
+      <block type="math_arithmetic">
+        <value name="A">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_single">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">9</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_trig">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">45</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constant"></block>
+      <block type="math_number_property">
+        <value name="NUMBER_TO_CHECK">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_round">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">3.1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_on_list"></block>
+      <block type="math_modulo">
+        <value name="DIVIDEND">
+          <shadow type="math_number">
+            <field name="NUM">64</field>
+          </shadow>
+        </value>
+        <value name="DIVISOR">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constrain">
+        <value name="VALUE">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="LOW">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="HIGH">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_int">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_float"></block>
+      <block type="math_atan2">
+        <value name="X">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="Y">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <category name="%{BKY_CATTEXT}" colour="%{BKY_TEXTS_HUE}">
+      <block type="text"></block>
+      <block type="text_join"></block>
+      <block type="text_append">
+        <value name="TEXT">
+          <shadow type="text"></shadow>
+        </value>
+      </block>
+      <block type="text_length">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_isEmpty">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+        <value name="FIND">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_charAt">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_getSubstring">
+        <value name="STRING">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_changeCase">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_trim">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_print">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_prompt_ext">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <category name="%{BKY_CATLISTS}" colour="%{BKY_LISTS_HUE}">
+      <block type="lists_create_with">
+        <mutation items="0"></mutation>
+      </block>
+      <block type="lists_create_with"></block>
+      <block type="lists_repeat">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="lists_length"></block>
+      <block type="lists_isEmpty"></block>
+      <block type="lists_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getIndex">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_setIndex">
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getSublist">
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_split">
+        <value name="DELIM">
+          <shadow type="text">
+            <field name="TEXT">,</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="lists_sort"></block>
+    </category>
+    <category name="%{BKY_CATCOLOUR}" colour="%{BKY_COLOUR_HUE}">
+      <block type="colour_picker"></block>
+      <block type="colour_random"></block>
+      <block type="colour_rgb">
+        <value name="RED">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+        <value name="GREEN">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="BLUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="colour_blend">
+        <value name="COLOUR1">
+          <shadow type="colour_picker">
+            <field name="COLOUR">#ff0000</field>
+          </shadow>
+        </value>
+        <value name="COLOUR2">
+          <shadow type="colour_picker">
+            <field name="COLOUR">#3333ff</field>
+          </shadow>
+        </value>
+        <value name="RATIO">
+          <shadow type="math_number">
+            <field name="NUM">0.5</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="%{BKY_CATVARIABLES}" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
+    <category name="%{BKY_CATFUNCTIONS}" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"></category>
+</xml>
+
+<div id="container"></div>
+<div id="fake_workspace" display = "none"></div>
+<script src="/code.js"></script>
+
+<!--위: 수정 중, 아래: 원본 back 코드-->
+
+<div id="another-workspace"></div>
+
+<div id="my-workspace">
+    <!-- 임시 이벤트 -->
+    <form action="/changeSnapshot" id="change-snapshot" method="post">
+        임시 이벤트 -->
+        <input type="text" id="tEvent" name="tEvent">
+        <button type="submit">선택</button>
+    </form>
+</div>
+<div id="workspace-group-list">
+    {% for workspace in workSpaceGroups %}
+    <div class="workspace-group">
+        <div class="workspace-group-info">hostWorkSpaceId : {{ workspace.hostWorkSpaceId }}</div>
+        <div class="workspace-group-info">subWorkSpaceId : {{ workspace.subWorkSpaceId }}</div>
+        <div class="workspace-group-info">hostUserId : {{ workspace.hostUserId }}</div>
+        <div class="workspace-group-info">subUserId : {{ workspace.subUserId }}</div>
+<!--        <form action="/change" id="workspace-change-form" method="post">-->
+<!--            <input type="hidden" id="sub-workspace" name="subWorkspace" value="{{ workspace.subUserId }}">-->
+<!--            <button type="submit">선택</button>-->
+<!--        </form>-->
+    </div>
+    {% endfor %}
+</div>
+
+<a href="/" id="exit-btn">방 나가기</a>
+<!--
+<fieldset>
+    <div id="chat-list">
+        {% for chat in chats %}
+        {% if chat.userId === 'system' %}
+        <div class="system">
+            <div>#system</div>
+            <div>{{chat.chat}}</div>
+        </div>
+        {% else %}
+        <div class="user">
+            <div>{{chat.nick}}</div>
+            <div>{{chat.chat}}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</fieldset>
+
+<form action="/chat" id="chat-form" method="post">
+    <input type="text" id="chat" name="chat">
+    <button type="submit">전송</button>
+</form>
+-->
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/event-source-polyfill/src/eventsource.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    const socket = io.connect('http://localhost:8002',{
+        path: '/socket.io',
+    });
+    // 방입장
+    socket.on('join_ex', function (data) {
+        // 채팅 추가
+        const div = document.createElement('div');
+        div.classList.add('system');
+        const chat = document.createElement('div');
+        div.textContent = data.chat;
+        div.appendChild(chat);
+        document.querySelector('#chat-list').appendChild(div);
+
+    });
+    socket.on('join_new', function (data) {
+        // 채팅 추가
+        const div = document.createElement('div');
+        div.classList.add('system');
+        const chat = document.createElement('div');
+        div.textContent = data.chat;
+        div.appendChild(chat);
+        document.querySelector('#chat-list').appendChild(div);
+
+        // 멤버 리스트 추가
+        const workspace = document.createElement('div');
+        workspace.classList.add('workspace-group');
+        const hostWorkSpaceId = document.createElement('div');
+        hostWorkSpaceId.classList.add('workspace-group-info');
+        hostWorkSpaceId.textContent = 'hostWorkSpaceId : ' + data.workspace.hostWorkSpaceId;
+        const subWorkSpaceId = document.createElement('div');
+        subWorkSpaceId.classList.add('workspace-group-info');
+        subWorkSpaceId.textContent = 'subWorkSpaceId : ' + data.workspace.subWorkSpaceId;
+        const hostUserId = document.createElement('div');
+        hostUserId.classList.add('workspace-group-info');
+        hostUserId.textContent = 'hostUserId : ' + data.workspace.hostUserId;
+        const subUserId = document.createElement('div');
+        subUserId.classList.add('workspace-group-info');
+        subUserId.textContent = 'subUserId : ' + data.workspace.subUserId;
+        workspace.appendChild(hostWorkSpaceId);
+        workspace.appendChild(subWorkSpaceId);
+        workspace.appendChild(hostUserId);
+        workspace.appendChild(subUserId);
+        document.querySelector('#workspace-group-list').appendChild(workspace);
+
+    });
+    // 방퇴장
+    socket.on('exit', function (data) {
+        const div = document.createElement('div');
+        div.classList.add('system');
+        const chat = document.createElement('div');
+        div.textContent = data.chat;
+        div.appendChild(chat);
+        document.querySelector('#chat-list').appendChild(div);
+    });
+    // 채팅입력시 생성
+    socket.on('chat', function (data) {
+        const div = document.createElement('div');
+        div.classList.add('user');
+        const name = document.createElement('div');
+        name.textContent = data.nick;
+        div.appendChild(name);
+        const chat = document.createElement('div');
+        chat.textContent = data.chat;
+        div.appendChild(chat);
+        document.querySelector('#chat-list').appendChild(div);
+    });
+    // 임시 이벤트 소켓, data에 workspace가 들어있음
+    socket.on('changeSnapshot', function(data){
+        const div = document.createElement('div');
+        div.textContent = data.snapshot;
+        document.querySelector('#my-workspace').appendChild(div);
+    })
+
+    document.querySelector('#chat-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (e.target.chat.value) {
+            axios.post('/workspace/{{workSpaceGroups[0].hostWorkSpaceId}}/chat', {
+                chat: this.chat.value,
+            })
+                .then(() => {
+                    e.target.chat.value = '';
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
+    });
+
+    // 임시 이벤트 리스너 여기 수정하면 됨
+    document.querySelector('#change-snapshot').addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (e.target.tEvent.value) {
+            axios.post('/workspace/{{workSpaceGroups[0].hostWorkSpaceId}}/change/snapshot', {
+                snapshot: this.tEvent.value,
+            })
+                .then(() => {
+                    e.target.tEvent.value = '';
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
+    });
+
+</script>
+
+{% endblock %}
